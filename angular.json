@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "manager-book-db"
+    }
+  },
+  "defaultProject": "manager-book-db",
+  "cli": {
+    "analytics": "eaf78545-78e8-4aa1-85c1-ec27df15e9b6"
+  }
 }
