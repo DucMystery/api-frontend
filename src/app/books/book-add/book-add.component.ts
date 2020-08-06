@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ICategory} from '../../categories/icategory';
 import {BookService} from '../../service/book.service';
 import {Router} from '@angular/router';
@@ -14,8 +14,13 @@ import {IBook} from '../ibook';
 })
 export class BookAddComponent implements OnInit {
 
-  addBookForm:FormGroup;
   categories: ICategory[] =[];
+
+  bookForm: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    author: new FormControl(''),
+    category: new FormControl('')
+  })
 
 
 
@@ -25,12 +30,6 @@ export class BookAddComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.addBookForm = this.fb.group({
-      id: ['',[Validators.required]],
-      name: ['',[Validators.required]],
-      author: ['',[Validators.required]],
-      category: ['']
-    });
    this.categoryService.getAll().subscribe((resp: ICategory[]) =>{
       this.categories = resp;
     });
@@ -38,25 +37,19 @@ export class BookAddComponent implements OnInit {
   }
 
   submit() {
-    // let data = this.addBookForm.value;
-    // data.category =<ICategory> data.category;
-    // this.bookService.add(data).subscribe((resp: IBook) => {
-    //   this.bookService.add(resp);
-    // });
-    // this.router.navigate(['']);
-    if (this.addBookForm.valid){
-      let data = this.addBookForm.value;
-      data.category.id = <ICategory> data.category.id;
-      data.id = Number(data.id);
-      this.bookService.add(data).subscribe((resp:IBook) => {
-        this.addBookForm.reset;
-        this.router.navigate(['']);
-      },
-        error => {
-        alert(error);
-        })
+    if (this.bookForm.valid){
+      const book: IBook = {
+        name: this.bookForm.value.name,
+        author: this.bookForm.value.author,
+        category: {
+          id: this.bookForm.value.category
+        }
+      }
+      this.bookService.add(book).subscribe(data =>{
+        this.router.navigate(['/books'])
+      });
+      }
     }
-  }
 
 
 }

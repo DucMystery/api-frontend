@@ -22,11 +22,11 @@ export class BookService {
     return this.http.post<IBook>(this.url+'/create',data);
   }
 
-  findById(id: number): Observable<IBook> {
+  findBookById(id: number): Observable<IBook> {
     return this.http.get<IBook>(this.url+'/'+id+'/search');
   }
 
-  update(data: any,id: number) : Observable<IBook> {
-    return this.http.put<IBook>(this.url+'/'+id+'edit',data);
+  update(id: number, data: any) : Observable<IBook> {
+    return this.http.put<IBook>(this.url+'/'+id+'/edit',data);
   }
 }
