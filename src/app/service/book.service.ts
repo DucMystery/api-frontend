@@ -8,7 +8,7 @@ import {environment} from '../../environments/environment';
   providedIn: 'root'
 })
 export class BookService {
-  url = environment.url_api+'/books';
+  url = environment.apiUrl+'/books';
   constructor(private http: HttpClient) { }
   getAll() : Observable<IBook[]> {
     return this.http.get<IBook[]>(this.url);

@@ -8,7 +8,7 @@ import {ICategory} from '../categories/icategory';
   providedIn: 'root'
 })
 export class CategoryService {
-  url = environment.url_api+'/categories';
+  url = environment.apiUrl+'/categories';
 
   constructor(private http: HttpClient) { }
 
